@@ -45,21 +45,8 @@ int main()
 
 	return 0;
 }
-//Psedocode
-/*
-function Dijkstra(G, w, s)
-    for each vertex v in V[G]                        // 初始化
-    previous[v] := undefined                         // 各点的已知最短路径上的前趋都未知
-    d[s] := 0                                              // 因为出发点到出发点间不需移动任何距离，所以可以直接将s到s的最小距离设为0
-    S := empty set
-    while Q is not an empty set                      // Dijkstra演算法主體
-    	u := Extract_Min(Q)
-    S.append(u)
-    for each edge outgoing from u as (u,v)
-        if d[v] > d[u] + w(u,v)             // 拓展边（u,v）。w(u,v)为从u到v的路径长度。
-            d[v] := d[u] + w(u,v)               // 更新路径长度到更小的那个和值。
-        	previous[v] := u
-*/
+
+
 const string citylist[]= {"A","B","C","D","E","F","G","H","I","J"};
 void Dijkstra()
 {
@@ -77,12 +64,15 @@ void Dijkstra()
 	for (it=City.begin(); it!=City.end(); it++) //initialize
 	{
 		V.insert(pair<string,int>(*it,1000));//set every node to start node 's distance is INFINITY
+		ST[*it]=999;//initialize all node's start time to INFINITY
 	}
 	mapit=V.find("A");//A can be replaced as the start city
 	if(mapit!=V.end())mapit->second=0;//Set A to A 's distance to ZERO
 	S.insert("A");//Put A into the set of visted
 	City.erase("A");//Erase A from the set of unvisted
 	ST["A"]=0;//set start point's start time to STARTTIME
+	//0 is the default start time
+	int round=1;
 	while (!City.empty())
 	{
 		//Extract Min
@@ -98,41 +88,83 @@ void Dijkstra()
 		//					so update the distance with d[C]+d[C][v]
 		//
 
-		//for each vertex in set S
-		cout<<"Break AT "<<endl;
-		for(int i=0; i<routecount; i++) //find next Timetable
+		//----ROUTECOUNT----
+		// The number of paths between different pairs of CITYS like A->B A->C D->F
+
+		//----rNUMBER----
+		// The number of WAYS you can travel along A PATH like A ---5---> B
+
+
+
+		//INTIALIZING LOOOOOOP
+		//UPDATING ALL ADJACANT
+
+		for(int i=0; i<routecount; i++)
 		{
 
 			if(S.count(Data[i].from))//All route from vertex in S
 			{
-				cout<<"we found "<<Data[i].from<<endl;
-				int temp=999;
+				//cout<<"Starting City is"<<Data[i].from<<endl;
 				for(int j=0; j<Data[i].rNumber; j++) //for every route start from node Data[i]
 				{
 					//update map V
-					if(temp>Data[i].TB[j].arrival-Data[i].TB[j].start && Data[i].TB[j].start>ST[Data[i].from])//the shortest available route
+					//ESTABILISH  A  LEGAL ROUTE
+					if(!S.count(Data[i].dest))
 					{
-						temp=Data[i].TB[j].arrival-Data[i].TB[j].start;
-						ST[Data[i].dest]=Data[i].TB[j].arrival;
-						cout<<"UPDATE Route from "<<Data[i].from<<" to "<<Data[i].dest<<endl;
+						if(Data[i].TB[j].arrival<ST[Data[i].dest] && Data[i].TB[j].start >= ST[Data[i].from] )//the shortest available route
+						{
+							ST[Data[i].dest]=Data[i].TB[j].arrival;
+							prev[Data[i].dest]=Data[i].from;
+							V[Data[i].dest]=ST[Data[i].dest]-ST[Data[i].from]+V[prev[Data[i].dest]];//distance + prev point's distance
+							//finish updating a route
+							//travel time = ST[dest]-ST[from];
+							//Total time => while tracing back from the dest and cumulate each part's travel time
+							cout<<"UPDATE Route from "<<Data[i].from<<" to "<<Data[i].dest<<endl;
+							cout<<"Start at "<<Data[i].TB[j].start<<" Arive at "<<Data[i].TB[j].arrival<<endl;
+							cout<<"Distance is "<<V[Data[i].dest]<<endl;
+						}
 					}
 
-					//Currently we don't consider overnight route
-					//And select the closest node
-					if(Data[i].TB[j].arrival-Data[i].TB[j].start<min && Data[i].TB[j].arrival-Data[i].TB[j].start>0 && Data[i].TB[j].start>ST[Data[i].from])
-					{
-						minC=Data[i].dest;//record the closest node
-					}
 				}
-				V[Data[i].dest]+=temp;//update the map V(initialize)
+			}
+		}
+
+		cout<<"Update Round "<<round++<<" Ends"<<endl;
+		cout<<endl<<endl<<endl;
+
+		//finish updating node's data
+		//------------------------------
+		//start selecting and add new node to set S
+		//find the node which is the closest to the root
+		mapit=V.begin();
+		for(; mapit!=V.end(); mapit++)
+		{
+			
+			if(!S.count(mapit->first))//find a node which isn't belongs to set S
+			{
+				if(V[mapit->first]<min)
+				{
+					minC=mapit->first;
+					min=V[mapit->first];
+				}
 			}
 		}
 
 		min=999;
-		it=City.find(minC);
-		S.insert(*it);
-		City.erase(*it);
-		//Update d[u]
+		
+		if(City.count(minC))
+		{
+			it=City.find(minC);
+			S.insert(*it);
+			City.erase(*it);
+		}
+		else
+		{
+			it=City.find("J");
+			S.insert(*it);
+			City.erase(*it);
+		}
+		
 
 		cout<<"City include "<<endl;
 		for (it=City.begin(); it!=City.end(); it++) //initialize
@@ -143,7 +175,14 @@ void Dijkstra()
 
 
 	}
-
+	
+	system("CLS");
+	mapit=V.begin();
+	for(; mapit!=V.end(); mapit++)
+	{
+		cout<<mapit->first<<" is "<<mapit->second<<endl;
+	}
+	
 }
 
 void load(FILE * fptr)
