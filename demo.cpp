@@ -48,13 +48,12 @@ int main()
 
 
 const string citylist[]= {"A","B","C","D","E","F","G","H","I","J"};
-void Dijkstra()
+void TimeBased()
 {
 	set<string> S;//set of visted node
 	set<string> City(citylist,citylist+sizeof(citylist)/sizeof(*citylist));//set of unvisted nodes
 	map<string,int> V;//result matrix
 	map<string,int> ST;//record the start time
-	//map<string,map<string,int>>matrix;//w[][] ?? i don't know should i use it ?????AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH FUUUUUUUUUUUUUUCK
 	map<string,string>prev;//record previous node
 	set<string>::iterator it;//set S or City 's iterator
 	map<string,int>::iterator mapit;//map V 's iterator
@@ -75,18 +74,7 @@ void Dijkstra()
 	int round=1;
 	while (!City.empty())
 	{
-		//Extract Min
-		//
-		//Step 1:
-		//	intialize map V : for each node in S act as the start point, reach the direct nodes and update map V with the shortest time
-		//					  (in the initialize step, there's only a start node in S)
-		//Step 2:
-		//	Update map V:	1.for each node in City , we find the closet node  (let's call it )C to any node in set S,
-		//					then add it to set S and remove it from set City
-		//					(Through Step 1, we can find out the closest node to the set S)
-		//					2.for each node can be reached from node C , if the distance can be reduced by bypass node C
-		//					so update the distance with d[C]+d[C][v]
-		//
+
 
 		//----ROUTECOUNT----
 		// The number of paths between different pairs of CITYS like A->B A->C D->F
