@@ -1,53 +1,8 @@
-#include <iostream>
-#include <string.h>
-#include <algorithm>
-#include <iterator>
-#include <set>
-#include <vector>
-#include <map>
-
+#include "Header.h"
+#include "Datastruct.h"
+#include "demo.h"
 using namespace std;
 
-struct timetable
-{
-	int start;
-	int arrival;
-	int cost;
-};
-
-typedef struct
-{
-	string from;
-	string dest;
-	int rNumber;//Records the number of routes between two citys
-	timetable TB[30];
-} DATA;
-
-DATA Data[1000];
-int routecount;
-
-void load(FILE *);
-void output(string);
-
-void Dijkstra();
-
-int main()
-{
-	//system("clear");
-	FILE * fptr;
-	string str;
-	fptr= fopen ("./tb.txt","r");
-	load(fptr);
-	Dijkstra();
-
-
-	fclose (fptr);
-
-	return 0;
-}
-
-
-const string citylist[]= {"A","B","C","D","E","F","G","H","I","J"};
 void TimeBased()
 {
 	set<string> S;//set of visted node
