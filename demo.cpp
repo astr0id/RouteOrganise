@@ -135,8 +135,11 @@ void TimeBased()
 	
 }
 
-void load(FILE * fptr)
+void load()
 {
+
+	FILE * fptr;
+	fptr= fopen ("./tb.txt","r");
 	const char * sep = "-|";
 	char str[100];
 	char *buffer;
@@ -167,4 +170,5 @@ void load(FILE * fptr)
 		}
 		Data[routecount].rNumber=cnt;
 	}
+	fclose (fptr);
 }

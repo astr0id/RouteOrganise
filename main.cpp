@@ -8,14 +8,12 @@ using namespace std;
 int main()
 {
 	system("reset");
-	FILE * fptr;
 	string str;
-	fptr= fopen ("./tb.txt","r");
-	load(fptr);
+	
+	load();
 	TimeBased();
 
 
-	fclose (fptr);
 
 	return 0;
 }
