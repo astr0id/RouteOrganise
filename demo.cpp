@@ -1,4 +1,11 @@
-#include "Header.h"
+#include <iostream>
+#include <string.h>
+#include <algorithm>
+#include <iterator>
+#include <set>
+#include <vector>
+#include <map>
+
 #include "Datastruct.h"
 #include "demo.h"
 using namespace std;
