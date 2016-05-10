@@ -6,9 +6,12 @@
 #include <vector>
 #include <map>
 #include <fstream>
-
+#include "Datastruct.h"
 #include "timebased.h"
 using namespace std;
+
+//DATA Data[1000];
+int routecount;
 
 void TimeBased()
 {

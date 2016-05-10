@@ -7,8 +7,12 @@
 #include <map>
 #include <fstream>
 
+
 #include "load.h"
+#include "Datastruct.h"
 using namespace std;
+
+DATA Data[1000];
 
 void load()
 {
