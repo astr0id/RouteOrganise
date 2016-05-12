@@ -13,7 +13,7 @@ int main()
 	string str;
 	
 	newload();
-	//TimeBased();
+	TimeBased();
 	//generate();
 	print();
 

@@ -10,9 +10,8 @@
 #include "timebased.h"
 using namespace std;
 
-//DATA Data[1000];
-int routecount;
-
+extern DATA Data[1000];
+extern int routecount;
 void TimeBased()
 {
 	set<string> S;//set of visted node

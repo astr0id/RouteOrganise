@@ -13,7 +13,7 @@
 using namespace std;
 
 DATA Data[1000];
-
+int routecount;
 void load()
 {
 
@@ -74,26 +74,31 @@ void newload()
 
 	while(fgets(str,sizeof(str),fptr))
 	{
+		buffer = strtok(str, sep);S=buffer;
+		buffer = strtok(NULL, sep);E=buffer;
+		cout<<"past city A is "<<pS<<" past city B is "<<pE<<endl;
+
+		cout<<"curr city A is "<<S<<" curr city B is "<<E<<endl<<endl;
 		if(pS==S && pE==E)
 		{
 			Data[routecount].rNumber++;
 		}
 		else
 		{
-			Data[routecount].rNumber=0;
+			pS=S;pE=E;
 			routecount++;
+			Data[routecount].rNumber=0;
+			
 		}	
 
-		buffer = strtok(str, sep);
-		Data[routecount].from=buffer;S=buffer;
-		buffer = strtok(NULL, sep);
-		Data[routecount].dest=buffer;E=buffer;
+		Data[routecount].from=S;
+		Data[routecount].dest=E;
 		buffer = strtok(NULL, sep);
 		Data[routecount].TB[Data[routecount].rNumber].start=atoi(buffer);
 		buffer = strtok(NULL, sep);
 		Data[routecount].TB[Data[routecount].rNumber].arrival=atoi(buffer);
 		buffer = strtok(NULL, sep);
-		Data[routecount].TB[Data[routecount].rNumber].cost=atoi(buffer);		
+		Data[routecount].TB[Data[routecount].rNumber].cost=atoi(buffer);	
 
 	}
 	fclose (fptr);
@@ -101,6 +106,7 @@ void newload()
 
 void print()
 {
+	cout<<"Total "<<routecount<<endl;
 	printf("Start City\tEnd City\tStart Time\tArrive Time\tCost\n" );
 	for(int i=1;i<=routecount;i++)
 	{

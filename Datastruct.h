@@ -19,9 +19,6 @@ typedef struct
 	timetable TB[30];
 } DATA;
 
-extern DATA Data[1000];
-
-extern int routecount;
 
 const string citylist[]= {"A","B","C","D","E","F","G","H","I","J"};
 
