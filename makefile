@@ -14,4 +14,4 @@ main.o : main.cpp
 	g++ -c main.cpp
 
 clean:
-	rm main main.o timebased.o load.o
+	rm main main.o timebased.o load.o moneybased.o
