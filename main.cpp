@@ -15,7 +15,7 @@ int main()
 	newload();
 	TimeBased();
 	//generate();
-	print();
+	//print();
 
 
 	return 0;
