@@ -9,5 +9,6 @@ void load();
 void newload();
 void print();
 void generate();
+void combine();
 
 #endif

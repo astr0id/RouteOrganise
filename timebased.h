@@ -1,11 +1,9 @@
+#include <iostream>
+
+#ifndef TIMEBASED_H_
+#define TIMEBASED_H_
 
 
-#ifndef TIMEBASED_H
-#define TIMEBASED_H
-
-//#include "Datastruct.h"
-
-void TimeBased();
-void MoneyBased();
+void TimeBased(std::string ,std::string, std::string);
 
 #endif

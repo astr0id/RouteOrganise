@@ -10,10 +10,19 @@ int main()
 {
 	
 	system("reset");
-	string str;
+	string start,end,time;
+	
+	cout<<"where to start ?"<<endl;
+	cin>>start;
+	cout<<"where to go ?"<<endl;
+	cin>>end;
+	cout<<"when to go ?"<<endl;
+	cin>>time;
+	
 	
 	newload();
-	TimeBased();
+	TimeBased(start,end,time);
+	//combine();
 	//generate();
 	//print();
 

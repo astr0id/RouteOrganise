@@ -9,6 +9,7 @@ struct timetable
 	int start;
 	int arrival;
 	int cost;
+	string kind;
 };
 
 typedef struct

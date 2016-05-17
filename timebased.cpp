@@ -12,7 +12,7 @@ using namespace std;
 
 extern DATA Data[1000];
 extern int routecount;
-void TimeBased()
+void TimeBased(string city_start,string city_end,string starttime)
 {
 	set<string> S;//set of visted node
 	set<string> City(citylist,citylist+sizeof(citylist)/sizeof(*citylist));//set of unvisted nodes
@@ -31,11 +31,11 @@ void TimeBased()
 		ST[*it]=999;//initialize all node's start time to INFINITY
 		OT[*it]=999;//asume all node's not wait till next day
 	}
-	mapit=V.find("A");//A can be replaced as the start city
+	mapit=V.find(city_start);//A can be replaced as the start city
 	if(mapit!=V.end())mapit->second=0;//Set A to A 's distance to ZERO
-	S.insert("A");//Put A into the set of visted
-	City.erase("A");//Erase A from the set of unvisted
-	ST["A"]=0;//set start point's start time to STARTTIME
+	S.insert(city_start);//Put A into the set of visted
+	City.erase(city_start);//Erase A from the set of unvisted
+	ST[city_start]=stoi(starttime);//set start point's start time to STARTTIME
 	//0 is the default start time
 	int round=1;
 	while (!City.empty())
@@ -136,10 +136,18 @@ void TimeBased()
 	}
 	
 	system("clear");
-	mapit=V.begin();
-	for(; mapit!=V.end(); mapit++)
+	//mapit=V.begin();
+	//for(; mapit!=V.end(); mapit++)
+	//{
+	//	cout<<mapit->first<<" is "<<mapit->second<<endl;
+	//}
+	string temp;
+	temp=city_end;
+	cout<<"the route is : ";
+	while(temp!=city_start)
 	{
-		cout<<mapit->first<<" is "<<mapit->second<<endl;
+		cout<<temp<<"<-";
+		temp=prev[temp];
 	}
-	
+	cout<<city_start<<endl<<"total time is : "<<V[city_end]<<endl;
 }
