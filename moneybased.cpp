@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 #include <algorithm>
 #include <iterator>
 #include <set>
@@ -13,7 +13,7 @@ using namespace std;
 extern DATA Data[1000];
 extern int routecount;
 
-void MoneyBased()
+void MoneyBased(string city_start, string city_end, int &starttime, int &totaltime, int &totalmoney, string path[], int &num)
 {
 	set<string> S;
 	set<string> City(citylist, citylist + sizeof(citylist) / sizeof(*citylist));//set of unvisted nodes
@@ -30,12 +30,12 @@ void MoneyBased()
 		V.insert(pair<string, int>(*it, 32767));
 		RM[*it] = min;
 	}
-	mapit = V.find("A");
+	mapit = V.find(city_start);
 	if (mapit != V.end())mapit->second = 0;
-	S.insert("A");
-	City.erase("A");
-	ST["A"] = 0;
-	RM["A"] = 0;
+	S.insert(city_start);
+	City.erase(city_start);
+	ST[city_start] = starttime % 24;
+	RM[city_start] = 0;
 	while (!City.empty())
 	{
 		for (int i = 1; i <= routecount; i++)
@@ -53,10 +53,10 @@ void MoneyBased()
 							prev[Data[i].dest] = Data[i].from;
 							RM[Data[i].dest] = Data[i].TB[j].cost;
 							if (RM[Data[i].dest] + V[prev[Data[i].dest]]<V[Data[i].dest])
-								V[Data[i].dest] = RM[Data[i].dest] + V[prev[Data[i].dest]];//- RM[Data[i].from]
-							cout << "UPDATE Route from " << Data[i].from << " to " << Data[i].dest << endl;
-							cout << "Start at " << Data[i].TB[j].start << " Arive at " << Data[i].TB[j].arrival << endl;
-							cout << "Moneycost is " << V[Data[i].dest] << endl;
+								V[Data[i].dest] = RM[Data[i].dest] + V[prev[Data[i].dest]];
+							//cout << "UPDATE Route from " << Data[i].from << " to " << Data[i].dest << endl;
+							//cout << "Start at " << Data[i].TB[j].start << " Arive at " << Data[i].TB[j].arrival << endl;
+							//cout << "Moneycost is " << V[Data[i].dest] << endl;
 						}
 					}
 				}
@@ -82,18 +82,43 @@ void MoneyBased()
 			S.insert(*it);
 			City.erase(*it);
 		}
-		cout << "City include " << endl;
-		for (it = City.begin(); it != City.end(); it++) //initialize
+		else
 		{
-			cout << *it << " ";//set every node to start node 's distance is INFINITY
+			it = City.begin();
+			S.insert(*it);
+			City.erase(*it);
 		}
-		cout << endl;
+		//cout << "City include " << endl;
+		//for (it = City.begin(); it != City.end(); it++) //initialize
+		//{
+		//	cout << *it << " ";//set every node to start node 's distance is INFINITY
+		//}
+		//cout << endl;
 	}
-	system("CLS");
-	mapit = V.begin();
-	for (; mapit != V.end(); mapit++)
+	//system("CLS");
+	//mapit = V.begin();
+	//for (; mapit != V.end(); mapit++)
+	//{
+	//	cout << mapit->first << " is " << mapit->second << endl;
+	//}
+	string temp;
+	temp = city_end;
+	//cout<<"the route is : ";
+	while (temp != city_start)
 	{
-		cout << mapit->first << " is " << mapit->second << endl;
+		//cout<<temp<<"<-";
+		temp = prev[temp];
+		num++;
 	}
-
+	int j = num;
+	temp = city_end;
+	while (temp != city_start)
+	{
+		path[j--] = temp;
+		temp = prev[temp];
+	}
+	path[j] = city_start;
+	//cout<<city_start<<endl<<"total time is : "<<V[city_end]<<endl;
+	totalmoney += V[city_end];
+	totaltime += (ST[city_end] - starttime);
 }
