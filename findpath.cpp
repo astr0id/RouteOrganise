@@ -67,7 +67,7 @@ void findpath(string start,string destiny,int moneylimit,int timelimit,int curco
 		{
 			CityStack.push(Data[i].from);
 			tempRD.start=Data[i].from;
-			tempRD.dest=Data[i].from;
+			tempRD.dest=Data[i].dest;
 			memcpy(&tempRD.TB,Data[i].TB,sizeof(Data[i].TB));
 			rStack.push(tempRD);
 			for(int j=0; j<=Data[i].rNumber; j++)
