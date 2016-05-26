@@ -29,6 +29,9 @@ void keyboard()
 			cout << " ";
 		}
 	}
+	int choice;
+	cout<<"Fast or Cheap"<<endl;
+	cin>>choice;
 	time = starttime;
 	via[0] = start;
 	via[city_via + 1] = end;
@@ -36,8 +39,10 @@ void keyboard()
 	for (int i = 0; i < city_via + 1; i++)
 	{
 		if (i)cout << "->";
-		TimeBased(via[i], via[i + 1], time, totaltime,totalmoney, path, num);
-		//MoneyBased(via[i], via[i + 1], time, totaltime, totalmoney, path, num);
+		if(choice)
+			TimeBased(via[i], via[i + 1], time, totaltime,totalmoney, path, num);
+		else
+			MoneyBased(via[i], via[i + 1], time, totaltime, totalmoney, path, num);
 		for (int j = 1; j <= num; j++)
 		{
 			if (i&&j == 1)continue;
