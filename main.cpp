@@ -4,6 +4,7 @@
 
 #include "load.h"
 #include "keyboard.h"
+#include "findpath.h"
 
 using namespace std;
 
@@ -13,7 +14,8 @@ int main()
 {
 	newload();
 	//oldload();
-	keyboard();
+	//keyboard();
+	findpath("A","J",1000,50,0,0,0);
 	//generate();
 	//print();
 	system("pause");
