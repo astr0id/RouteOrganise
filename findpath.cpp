@@ -16,10 +16,36 @@ extern DATA Data[1000];
 extern int routecount;
 
 stack<string> CityStack;
+stack<RouteData> rStack;//stack for one route, arrary for all routes, and we let the top element records the time and money consumption, And it's good for sort
+int RDnum;
+RouteData tempRD;
+void printstack(stack<RouteData> printee)
+{
+
+	stack<RouteData> temp;
+	while(!printee.empty())
+	{
+		temp.push(printee.top());
+		printee.pop();
+	}
+	cout<<"Route NO."<<RDnum<<endl;
+	while(!temp.empty())
+	{
+		cout<<temp.top().TB.start<<" Depart From:"<<temp.top().start<<endl<<
+		"Take "<<temp.top().TB.kind<<" number:"<<temp.top().TB.name<<endl<<
+		"Arrive At "<<temp.top().dest<<" at "<<temp.top().TB.arrival<<endl<<endl;
+		printee.push(temp.top());
+		temp.pop();
+	}
+	//cout<<endl;
+}
+void printall()
+{
+
+}
 
 void findpath(string start,string destiny,int moneylimit,int timelimit,int curcost,int curtime,int starttime)
 {
-	//cout<<"Break 1"<<start<<starttime<<endl;
 	//if it's out of bound,then don't travel any further
 	if(curcost >= moneylimit && start != destiny)
 		return ;
@@ -29,21 +55,21 @@ void findpath(string start,string destiny,int moneylimit,int timelimit,int curco
 	if(start==destiny)
 	{
 		if(curcost > moneylimit || curtime > timelimit)return;
-		cout<<CityStack.top()<<"————";
-		CityStack.pop();
+		
+		printstack(rStack);//cout<<destiny<<endl;
+		RDnum++;
 		return ;
 	}
 	//deep-priority traverse
 	for(int i=1; i<=routecount; i++)
 	{
-
-	//cout<<"Break 2"<<start<<starttime<<endl;
-		if(Data[i].from == start)//All route from vertex in S
+		if(Data[i].from == start)
 		{
-
-	//cout<<"Break 3"<<start<<starttime<<endl;
 			CityStack.push(Data[i].from);
-			cout<<"test"<<CityStack.top()<<" ";
+			tempRD.start=Data[i].from;
+			tempRD.dest=Data[i].from;
+			memcpy(&tempRD.TB,Data[i].TB,sizeof(Data[i].TB));
+			rStack.push(tempRD);
 			for(int j=0; j<=Data[i].rNumber; j++)
 			{
 				int est;
@@ -52,8 +78,9 @@ void findpath(string start,string destiny,int moneylimit,int timelimit,int curco
 				findpath(Data[i].dest,destiny,moneylimit,timelimit,curcost+Data[i].TB[j].cost,curtime+est,Data[i].TB[j].arrival);
 
 			}
-			cout<<CityStack.top()<<" ";
 			CityStack.pop();
+			rStack.pop();
+			
 		}
 	}
 	return ;
