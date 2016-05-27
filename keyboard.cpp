@@ -7,7 +7,7 @@
 
 using namespace std;
 
-	extern RouteData pathdata[100];
+RouteData pathdata[100000];
 void keyboard()
 {
 	string start, end, via[50];

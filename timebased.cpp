@@ -13,7 +13,7 @@ using namespace std;
 extern DATA Data[1000];
 extern int routecount;
 static RouteData tempRD;
-RouteData pathdata[100];
+extern RouteData pathdata[100000];
 void TimeBased(string city_start, string city_end, int &starttime, int &totaltime, int &totalmoney, string path[], int &num)
 {
 	set<string> S;//set of visted node

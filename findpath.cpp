@@ -18,7 +18,7 @@ extern int routecount;
 stack<string> CityStack;
 stack<RouteData> rStack;//stack for one route, arrary for all routes, and we let the top element records the time and money consumption, And it's good for sort
 int RDnum;
-static RouteData tempRD;
+static RouteData RDtemp;
 void printstack(stack<RouteData> printee)
 {
 
@@ -66,10 +66,10 @@ void findpath(string start,string destiny,int moneylimit,int timelimit,int curco
 		if(Data[i].from == start)
 		{
 			CityStack.push(Data[i].from);
-			tempRD.start=Data[i].from;
-			tempRD.dest=Data[i].dest;
-			memcpy(&tempRD.TB,Data[i].TB,sizeof(Data[i].TB));
-			rStack.push(tempRD);
+			RDtemp.start=Data[i].from;
+			RDtemp.dest=Data[i].dest;
+			memcpy(&RDtemp.TB,Data[i].TB,sizeof(Data[i].TB));
+			rStack.push(RDtemp);
 			for(int j=0; j<=Data[i].rNumber; j++)
 			{
 				int est;
