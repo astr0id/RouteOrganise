@@ -12,6 +12,7 @@ using namespace std;
 
 extern DATA Data[1000];
 extern int routecount;
+RouteData pathdata[100];
 void TimeBased(string city_start, string city_end, int &starttime, int &totaltime, int &totalmoney, string path[], int &num)
 {
 	set<string> S;//set of visted node
@@ -21,9 +22,11 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 	map<string,int> OT;//note that if there is an overnight wait
 	map<string, int> RM;
 	map<string,string>prev;//record previous node
+	map<string,RouteData> prevdata;
 	set<string>::iterator it;//set S or City 's iterator
 	map<string,int>::iterator mapit;//map V 's iterator
 	string minC;
+	RouteData tempRD;
 	int min=999;//intialize min to INFINITY
 
 	for (it=City.begin(); it!=City.end(); it++) //initialize
@@ -73,10 +76,14 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 
 						if(est<OT[Data[i].dest])//the shortest available route
 						{
-							RM[Data[i].dest] = Data[i].TB[j].cost;
+							//
+							tempRD.start=Data[i].from;
+							tempRD.dest=Data[i].dest;
+							memcpy(&tempRD.TB,Data[i].TB,sizeof(Data[i].TB));
 							OT[Data[i].dest]=est;
 							ST[Data[i].dest]=Data[i].TB[j].arrival;
 							prev[Data[i].dest]=Data[i].from;
+							prevdata[Data[i].dest]=tempRD;
 							V[Data[i].dest]=OT[Data[i].dest]+V[prev[Data[i].dest]];//distance + prev point's distance
 							//finish updating a route
 							//travel time = ST[dest]-ST[from];
@@ -155,12 +162,17 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 	}
 	int j = num;
 	temp = city_end;
+	tempRD = prevdata[city_end];
 	while (temp != city_start)
 	{
 		path[j--] = temp;
+		pathdata[j--] = tempRD;
+		tempRD = prevdata[temp];
 		temp = prev[temp];
+
 	}
 	path[j] = city_start;
+	pathdata[j] = prevdata[city_start];
 	//cout<<city_start<<endl<<"total time is : "<<V[city_end]<<endl;
 	totalmoney += RM[city_end];
 	totaltime += V[city_end];

@@ -3,6 +3,7 @@
 #include "keyboard.h"
 #include "moneybased.h"
 #include "timebased.h"
+#include "Datastruct.h"
 
 using namespace std;
 
@@ -11,6 +12,7 @@ void keyboard()
 	string start, end, via[50];
 	string temp;
 	string path[50];
+	extern RouteData pathdata[100];
 	int city_via = 0, totaltime = 0, num = 1, time = 0, day = 0, totalmoney = 0, starttime = 0;
 	cout << "where to start ?" << endl;
 	cin >> start;
@@ -49,6 +51,13 @@ void keyboard()
 			cout << path[j];
 			if (j != num)
 				cout << "->";
+		}
+		for(int j = 1;j <= num; j++)
+		{
+			if (i&&j == 1)continue;
+			cout<<"@"<<pathdata[j].TB.start<<" Depart From:"<<pathdata[i].start<<endl<<
+			"Take "<<pathdata[i].TB.kind<<" number:"<<pathdata[i].TB.name<<endl<<
+			"Arrive At "<<pathdata[i].dest<<" at "<<pathdata[i].TB.arrival<<endl<<endl;
 		}
 		time += totaltime;
 		totaltime = 0;

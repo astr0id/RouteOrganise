@@ -31,7 +31,7 @@ void printstack(stack<RouteData> printee)
 	cout<<"Route NO."<<RDnum<<endl;
 	while(!temp.empty())
 	{
-		cout<<temp.top().TB.start<<" Depart From:"<<temp.top().start<<endl<<
+		cout<<"@"<<temp.top().TB.start<<" Depart From:"<<temp.top().start<<endl<<
 		"Take "<<temp.top().TB.kind<<" number:"<<temp.top().TB.name<<endl<<
 		"Arrive At "<<temp.top().dest<<" at "<<temp.top().TB.arrival<<endl<<endl;
 		printee.push(temp.top());

@@ -14,8 +14,8 @@ int main()
 {
 	newload();
 	//oldload();
-	//keyboard();
-	findpath("A","J",1000,20,0,0,0);
+	keyboard();
+	//findpath("A","J",1000,20,0,0,0);
 	//generate();
 	//print();
 	system("pause");
