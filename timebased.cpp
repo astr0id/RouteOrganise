@@ -12,6 +12,7 @@ using namespace std;
 
 extern DATA Data[1000];
 extern int routecount;
+static RouteData tempRD;
 RouteData pathdata[100];
 void TimeBased(string city_start, string city_end, int &starttime, int &totaltime, int &totalmoney, string path[], int &num)
 {
@@ -157,17 +158,38 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 	int j = num;
 	temp = city_end;
 	tempRD = prevdata[city_end];
-	while (temp != city_start)
+	while (prev[temp] != city_start)
 	{
+		cout<<"temp="<<temp<<endl;
+		cout<<"from "<<tempRD.start<<" to "<<tempRD.dest<<endl;
 		path[j--] = temp;
-		pathdata[j--] = tempRD;
-		tempRD = prevdata[temp];
+		memcpy(&pathdata[j],&tempRD,sizeof(tempRD));
+		//pathdata[]
+		//cout<<"from "<<tempRD.start<<" to "<<tempRD.dest<<endl;
+		
 		temp = prev[temp];
-
+		tempRD = prevdata[temp];
 	}
+	cout<<"temp is "<<temp<<" j is "<<j<<endl;
+	j--;
 	path[j] = city_start;
-	//pathdata[j] = prevdata[city_start];
+	tempRD = prevdata[temp];
+	memcpy(&pathdata[j],&tempRD,sizeof(tempRD));
+	system("clear");
+	cout<<"prev A is "<<prevdata["A"].start<<endl;
+	cout<<"prev B is "<<prevdata["B"].start<<endl;
+	cout<<"prev C is "<<prevdata["C"].start<<endl;
+	cout<<"prev D is "<<prevdata["D"].start<<endl;
+	cout<<"prev E is "<<prevdata["E"].start<<endl;
+	cout<<"prev F is "<<prevdata["F"].start<<endl;
+	cout<<"prev G is "<<prevdata["G"].start<<endl;
+	cout<<"prev H is "<<prevdata["H"].start<<endl;
+	cout<<"prev I is "<<prevdata["I"].start<<endl;
+	cout<<"prev J is "<<prevdata["J"].start<<endl;
+
+	//cout<<"from "<<tempRD.start<<" to "<<tempRD.dest<<endl;
+	//memcpy(&pathdata[j],&prevdata[city_start],sizeof(tempRD));
 	//cout<<city_start<<endl<<"total time is : "<<V[city_end]<<endl;
-	totalmoney += RM[city_end];
-	totaltime += V[city_end];
+	//totalmoney += RM[city_end];
+	//totaltime += V[city_end];
 }

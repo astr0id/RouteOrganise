@@ -55,7 +55,7 @@ void findpath(string start,string destiny,int moneylimit,int timelimit,int curco
 	if(start==destiny)
 	{
 		if(curcost > moneylimit || curtime > timelimit)return;
-		
+
 		printstack(rStack);//cout<<destiny<<endl;
 		RDnum++;
 		return ;
