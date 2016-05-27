@@ -18,7 +18,7 @@ extern int routecount;
 stack<string> CityStack;
 stack<RouteData> rStack;//stack for one route, arrary for all routes, and we let the top element records the time and money consumption, And it's good for sort
 int RDnum;
-RouteData tempRD;
+static RouteData tempRD;
 void printstack(stack<RouteData> printee)
 {
 

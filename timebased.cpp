@@ -26,7 +26,7 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 	set<string>::iterator it;//set S or City 's iterator
 	map<string,int>::iterator mapit;//map V 's iterator
 	string minC;
-	RouteData tempRD;
+	static RouteData tempRD;
 	int min=999;//intialize min to INFINITY
 
 	for (it=City.begin(); it!=City.end(); it++) //initialize
@@ -145,12 +145,6 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 
 	}
 	
-	//system("CLS");
-	//mapit=V.begin();
-	//for(; mapit!=V.end(); mapit++)
-	//{
-	//	cout<<mapit->first<<" is "<<mapit->second<<endl;
-	//}
 	string temp;
 	temp=city_end;
 	//cout<<"the route is : ";
@@ -172,7 +166,7 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 
 	}
 	path[j] = city_start;
-	pathdata[j] = prevdata[city_start];
+	//pathdata[j] = prevdata[city_start];
 	//cout<<city_start<<endl<<"total time is : "<<V[city_end]<<endl;
 	totalmoney += RM[city_end];
 	totaltime += V[city_end];

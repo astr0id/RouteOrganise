@@ -52,7 +52,7 @@ void keyboard()
 			if (j != num)
 				cout << "->";
 		}
-		for(int j = 1;j <= num; j++)
+		for(int j = 1;j < num; j++)
 		{
 			if (i&&j == 1)continue;
 			cout<<"@"<<pathdata[j].TB.start<<" Depart From:"<<pathdata[i].start<<endl<<
