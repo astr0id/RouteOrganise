@@ -21,6 +21,15 @@ typedef struct
 	timetable TB[30];
 } DATA;
 
+typedef struct 
+{
+	string currentCity;
+	string nextCity;
+	int timeleft;
+	//int currentState;
+	//1-waiting 2-traveling
+	bool isTravel;
+}PassengerData;
 
 const string citylist[]= {"A","B","C","D","E","F","G","H","I","J"};
 

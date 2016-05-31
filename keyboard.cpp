@@ -17,8 +17,7 @@
 
 using namespace std;
 
-void MBkeyboard();
-void TBkeyboard();
+void TMBkeyboard(int);
 void LTkeyboard();
 
 extern DATA Data[1000];
@@ -27,6 +26,8 @@ map<string, int> FinalRecord, TempFinalRecord;
 map<string, string> tempPath, Path;
 map<string, int>Index0;
 map<string, int>Index1;
+
+int step=2;
 
 void keyboard()
 {
@@ -39,10 +40,10 @@ void keyboard()
 	switch(strategy)
 	{
 		case 1:
-			MBkeyboard();
+			TMBkeyboard(0);
 			break;
 		case 2:
-			TBkeyboard();
+			TMBkeyboard(1);
 			break;
 		case 3:
 			LTkeyboard();
@@ -50,7 +51,7 @@ void keyboard()
 	}
 }
 
-void MBkeyboard()
+void TMBkeyboard(int choice)
 {
 	for (int i = 1; i <= routecount; i++)
 	{
@@ -94,13 +95,16 @@ void MBkeyboard()
 	for (int i = 0; i < city_via + 1; i++)
 	{
 		FinalRecord[via[i]] = 1;
+		if(!choice)
+			MoneyBased(via[i], via[i + 1], time, totalmoney);
+		else
+			TimeBased(via[i], via[i + 1], time, totalmoney);
 
-		MoneyBased(via[i], via[i + 1], time, totalmoney);
 		for (count = 0, it = City.begin(); it != City.end(); it++)
 		{
 			if (FinalRecord.find(*it)->second)count++;
 		}
-		for (int i = 2; i <= count; i++)
+		for (int i = step; i <= count; i++)
 		{
 			for (it = City.begin(); it != City.end(); it++)
 			{
@@ -116,92 +120,17 @@ void MBkeyboard()
 				}
 			}
 		}
+		step+=count;
+		step++;
+		/*
 		for (it = City.begin(); it != City.end(); it++)
 			FinalRecord[*it] = 0;
+		*/
 		time = (totaltime + starttime) % 24;
 	}
 	cout << endl << "total time is : " << totaltime << endl;
 	cout << endl;
-	cout << "total money is:" << totalmoney;
-}
-
-void TBkeyboard()
-{
-
-	for (int i = 1; i <= routecount; i++)
-	{
-		for (int j = 0; j < Data[i].rNumber; j++)
-		{
-			Index0.insert(pair<string, int>(Data[i].TB[j].name, 0));
-			Index1.insert(pair<string, int>(Data[i].TB[j].name, 0));
-		}
-	}
-	set<string> City(citylist, citylist + sizeof(citylist) / sizeof(*citylist));
-	set<string>::iterator it;
-	for (it = City.begin(); it != City.end(); it++)
-	{
-		Path.insert(pair<string, string>(*it, ""));
-		FinalRecord.insert(pair<string, int>(*it, 0));
-
-	}
-	string start, end, via[50];
-	string temp;
-	
-	int city_via = 0, totaltime = 0, num = 1, time = 0, totalmoney = 0, starttime = 0, count = 0;//day
-	cout << "where to start ?" << endl;
-	cin >> start;
-	cout << "where to go ?" << endl;
-	cin >> end;
-	cout << "when to go ?" << endl;
-	cin >> starttime;
-	cout << "how many country do you want to pass through?" << endl;
-	cin >> city_via;
-	if (city_via)
-	{
-		cout << "where to pass through?" << endl;
-		for (int i = 1; i <= city_via; i++)
-		{
-			cin >> via[i];
-			cout << " ";
-		}
-	}
-	time = starttime;
-	via[0] = start;
-	via[city_via + 1] = end;
-	for (int i = 0; i < city_via + 1; i++)
-	{
-		FinalRecord[via[i]] = 1;
-
-		TimeBased(via[i], via[i + 1], time, totalmoney);
-		for (count = 0, it = City.begin(); it != City.end(); it++)
-		{
-			if (FinalRecord.find(*it)->second)count++;
-		}
-		for (int i = 2; i <= count; i++)
-		{
-			for (it = City.begin(); it != City.end(); it++)
-			{
-				if (FinalRecord.find(*it)->second == i)
-				{
-					
-					cout << "from :" << Data[Index0[Path[*it]]].from << endl << "Take :" << Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].kind << endl;
-					cout << "number is :" << Path[*it] << endl << "Arrive At " << Data[Index0[Path[*it]]].dest << "  at" << Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival << endl;
-					if (i == count)
-					{
-						if (Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].start < time)totaltime += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival - time + 24;
-						else totaltime += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival - time ;
-					}
-				}
-			}
-		}
-		for (it = City.begin(); it != City.end(); it++)
-			FinalRecord[*it] = 0;
-		time = (totaltime + starttime) % 24;
-		num = 1;
-	}
-	cout << endl << "total time is : " << totaltime << endl;
-	cout << endl;
-	cout << "total money is:" << totalmoney;
+	cout << "total money is:" << totalmoney<<endl;
 }
 
 void LTkeyboard()
@@ -303,7 +232,7 @@ void LTkeyboard()
 		}
 		cout << endl << "total time is : " << totaltime << endl;
 		cout << endl;
-		cout << "total money is:" << MinMoney;
+		cout << "total money is:" << MinMoney<<endl;
 	}
 	else 
 	{

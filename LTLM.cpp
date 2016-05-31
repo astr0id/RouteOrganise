@@ -67,18 +67,14 @@ void LimittedTimeLeastMoney(int TotalTime, int Cur_time, int starttime, int Limi
 								else
 									TotalTime += Data[i].TB[j].arrival - Cur_time;
 								Cur_time = (starttime + TotalTime) % 24;
-								tempPath[Data[i].from] = Data[i].TB[j].name;
+								tempPath[Data[i].dest] = Data[i].TB[j].name;
 								Index0[Data[i].TB[j].name] = i;
 								Index1[Data[i].TB[j].name] = j;
 								LimittedTimeLeastMoney(TotalTime, Cur_time, starttime, LimittedTime, Money, *it, City_end, count, MinMoney,via);
-								tempPath[Data[i].from] = "";
-								Index0[Data[i].TB[j].name] = i;
-								Index1[Data[i].TB[j].name] = j;
+								tempPath[Data[i].dest] = "";
 								Money = moneytemp;
 								TotalTime = totaltimetemp;
 								Cur_time = (starttime + TotalTime) % 24;
-								
-							//}
 							
 						}
 						
