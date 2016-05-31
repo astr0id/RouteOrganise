@@ -14,7 +14,7 @@ using namespace std;
 
 extern DATA Data[1000];
 extern int routecount;
-
+/*
 stack<string> CityStack;
 stack<RouteData> rStack;//stack for one route, arrary for all routes, and we let the top element records the time and money consumption, And it's good for sort
 int RDnum;
@@ -85,3 +85,4 @@ void findpath(string start,string destiny,int moneylimit,int timelimit,int curco
 	}
 	return ;
 }
+*/

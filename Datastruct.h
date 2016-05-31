@@ -21,12 +21,6 @@ typedef struct
 	timetable TB[30];
 } DATA;
 
-typedef struct 
-{
-	string start;
-	string dest;
-	timetable TB;
-}RouteData;
 
 const string citylist[]= {"A","B","C","D","E","F","G","H","I","J"};
 

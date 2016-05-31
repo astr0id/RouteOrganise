@@ -1,9 +1,9 @@
 #include <iostream>
 
-#ifndef TIMEBASED_H
-#define TIMEBASED_H
+#ifndef TIMEBASED_H_
+#define TIMEBASED_H_
 
 
-void TimeBased(std::string, std::string, int&, int&, int &, std::string *, int &);
+void TimeBased(std::string, std::string, int, int &);
 
 #endif

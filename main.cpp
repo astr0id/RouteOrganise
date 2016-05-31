@@ -13,11 +13,6 @@ using namespace std;
 int main()
 {
 	newload();
-	//oldload();
 	keyboard();
-	//findpath("A","B",1000,5,0,0,0);
-	//generate();
-	//print();
-	//system("pause");
 	return 0;
 }

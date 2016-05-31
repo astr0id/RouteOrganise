@@ -12,10 +12,14 @@ using namespace std;
 
 extern DATA Data[1000];
 extern int routecount;
-static RouteData tempRD;
-extern RouteData pathdata[100000];
-void TimeBased(string city_start, string city_end, int &starttime, int &totaltime, int &totalmoney, string path[], int &num)
+extern map<string, int> FinalRecord, TempFinalRecord;
+extern map<string, string> tempPath, Path;
+extern map<string, int>Index0;
+extern map<string, int>Index1;
+
+void TimeBased(string city_start, string city_end, int starttime, int &totalmoney)
 {
+	int num = 1;
 	set<string> S;//set of visted node
 	set<string> City(citylist,citylist+sizeof(citylist)/sizeof(*citylist));//set of unvisted nodes
 	map<string,int> V;//result matrix
@@ -23,11 +27,9 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 	map<string,int> OT;//note that if there is an overnight wait
 	map<string, int> RM;
 	map<string,string>prev;//record previous node
-	map<string,RouteData> prevdata;
 	set<string>::iterator it;//set S or City 's iterator
 	map<string,int>::iterator mapit;//map V 's iterator
 	string minC;
-	static RouteData tempRD;
 	int min=999;//intialize min to INFINITY
 
 	for (it=City.begin(); it!=City.end(); it++) //initialize
@@ -77,14 +79,13 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 
 						if(est<OT[Data[i].dest])//the shortest available route
 						{
-							//
-							tempRD.start=Data[i].from;
-							tempRD.dest=Data[i].dest;
-							memcpy(&tempRD.TB,Data[i].TB,sizeof(Data[i].TB));
+							RM[Data[i].dest] = Data[i].TB[j].cost;
 							OT[Data[i].dest]=est;
 							ST[Data[i].dest]=Data[i].TB[j].arrival;
 							prev[Data[i].dest]=Data[i].from;
-							prevdata[Data[i].dest]=tempRD;
+							Path[Data[i].dest] = Data[i].TB[j].name;
+							Index0[Data[i].TB[j].name] = i;
+							Index1[Data[i].TB[j].name] = j;
 							V[Data[i].dest]=OT[Data[i].dest]+V[prev[Data[i].dest]];//distance + prev point's distance
 							//finish updating a route
 							//travel time = ST[dest]-ST[from];
@@ -146,6 +147,12 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 
 	}
 	
+	//system("CLS");
+	//mapit=V.begin();
+	//for(; mapit!=V.end(); mapit++)
+	//{
+	//	cout<<mapit->first<<" is "<<mapit->second<<endl;
+	//}
 	string temp;
 	temp=city_end;
 	//cout<<"the route is : ";
@@ -157,39 +164,11 @@ void TimeBased(string city_start, string city_end, int &starttime, int &totaltim
 	}
 	int j = num;
 	temp = city_end;
-	tempRD = prevdata[city_end];
-	while (prev[temp] != city_start)
+	while (temp != city_start)
 	{
-		cout<<"temp="<<temp<<endl;
-		cout<<"from "<<tempRD.start<<" to "<<tempRD.dest<<endl;
-		path[j--] = temp;
-		memcpy(&pathdata[j],&tempRD,sizeof(tempRD));
-		//pathdata[]
-		//cout<<"from "<<tempRD.start<<" to "<<tempRD.dest<<endl;
-		
+		FinalRecord[temp] = j--;
 		temp = prev[temp];
-		tempRD = prevdata[temp];
 	}
-	cout<<"temp is "<<temp<<" j is "<<j<<endl;
-	j--;
-	path[j] = city_start;
-	tempRD = prevdata[temp];
-	memcpy(&pathdata[j],&tempRD,sizeof(tempRD));
-	system("clear");
-	cout<<"prev A is "<<prevdata["A"].start<<endl;
-	cout<<"prev B is "<<prevdata["B"].start<<endl;
-	cout<<"prev C is "<<prevdata["C"].start<<endl;
-	cout<<"prev D is "<<prevdata["D"].start<<endl;
-	cout<<"prev E is "<<prevdata["E"].start<<endl;
-	cout<<"prev F is "<<prevdata["F"].start<<endl;
-	cout<<"prev G is "<<prevdata["G"].start<<endl;
-	cout<<"prev H is "<<prevdata["H"].start<<endl;
-	cout<<"prev I is "<<prevdata["I"].start<<endl;
-	cout<<"prev J is "<<prevdata["J"].start<<endl;
-
-	//cout<<"from "<<tempRD.start<<" to "<<tempRD.dest<<endl;
-	//memcpy(&pathdata[j],&prevdata[city_start],sizeof(tempRD));
 	//cout<<city_start<<endl<<"total time is : "<<V[city_end]<<endl;
-	//totalmoney += RM[city_end];
-	//totaltime += V[city_end];
+	totalmoney += RM[city_end];
 }

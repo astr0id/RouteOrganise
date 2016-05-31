@@ -1,6 +1,5 @@
-main: main.o timebased.o load.o moneybased.o keyboard.o findpath.o
-	g++ -o main main.o timebased.o load.o moneybased.o keyboard.o findpath.o
-
+main: main.o timebased.o load.o moneybased.o keyboard.o findpath.o ltlm.o
+	g++ -o main main.o timebased.o load.o moneybased.o keyboard.o findpath.o ltlm.o
 
 timebased.o : timebased.cpp timebased.h Datastruct.h
 	g++ -c  timebased.cpp
@@ -17,8 +16,11 @@ keyboard.o : keyboard.cpp timebased.h moneybased.h Datastruct.h
 findpath.o : findpath.cpp Datastruct.h
 	g++ -c findpath.cpp
 
+ltlm.o : LTLM.cpp LTLM.h Datastruct.h
+	g++ -c LTLM.cpp
+
 main.o : main.cpp keyboard.h
 	g++ -c  main.cpp
 
 clean:
-	rm main.o timebased.o load.o moneybased.o keyboard.o findpath.o
+	rm main.o timebased.o load.o moneybased.o keyboard.o findpath.o ltlm.o
