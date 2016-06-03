@@ -31,18 +31,6 @@ extern std::stack<TBlock> TData;
 
 map<int,string> NewRecord;
 int RecNum;
-void trans()
-{
-	for(int i=0;i<10;i++)
-	{
-		if(FinalRecord[citylist[i]] != 0)
-		{
-			NewRecord[FinalRecord[citylist[i]]]=citylist[i];
-			RecNum++;
-		}
-	}
-}
-
 
 int main()
 {
@@ -53,6 +41,7 @@ int main()
 	keyboard();
 	//printstack(TData);
 	//cout<<"min cost "<<mincost<<endl;
-	go();
+	//go();
+	//print();
 	return 0;
 }

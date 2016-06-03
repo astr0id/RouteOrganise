@@ -40,7 +40,7 @@ typedef struct
 	string kind;
 }TBlock;
 
-const string citylist[]= {"A","B","C","D","E","F","G","H","I","J"};
+const string citylist[]= {"A","B","C","D","E","F","G","H","I","J","K","L","M"};
 
 
 #endif

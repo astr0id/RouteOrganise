@@ -29,11 +29,12 @@ map<string, int>Index0;
 map<string, int>Index1;
 
 int step=2;
+set<string> inRoute;
 
 void FPkb()
 {
-	string start, end;
-	int starttime,tlimit,mlimit;
+	string start, end, via;
+	int starttime,tlimit,mlimit,city_via;
 	cout << "where to start ?" << endl;
 	cin >> start;
 	cout << "where to go ?" << endl;
@@ -44,6 +45,17 @@ void FPkb()
 	cin >> tlimit;
 	cout<< "how much money you have"<<endl;
 	cin >> mlimit;
+	cout << "how many country do you want to pass through?" << endl;
+	cin >> city_via;
+	if (city_via)
+	{
+		cout << "where to pass through?" << endl;
+		for (int i = 1; i <= city_via; i++)
+		{
+			cin >> via;
+			inRoute.insert(via);
+		}
+	}
 	findpath(start,end,mlimit,tlimit,0,0,starttime);
 }
 
@@ -129,6 +141,7 @@ void TMBkeyboard(int choice)
 			{
 				if (FinalRecord.find(*it)->second == i)
 				{
+					cout<<"start @ "<<Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].start<<endl;
 					cout << "from :" << Data[Index0[Path[*it]]].from << endl << "Take :" << Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].kind << endl;
 					cout << "number is :" << Path[*it] << endl << "Arrive At " << Data[Index0[Path[*it]]].dest << "  at" << Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival << endl;
 					if (i == count)
@@ -152,110 +165,3 @@ void TMBkeyboard(int choice)
 	cout << "total money is:" << totalmoney<<endl;
 }
 
-void LTkeyboard()
-{
-	int MinMoney = 0;
-	for (int i = 1; i <= routecount; i++)
-	{
-		for (int j = 0; j < Data[i].rNumber; j++)
-		{
-			Index0.insert(pair<string, int>(Data[i].TB[j].name, 0));
-			Index1.insert(pair<string, int>(Data[i].TB[j].name, 0));
-		}
-	}
-	set<string> City(citylist, citylist + sizeof(citylist) / sizeof(*citylist));
-	set<string>::iterator it;
-	for (it = City.begin(); it != City.end(); it++)
-	{
-		tempPath.insert(pair<string, string>(*it, ""));
-		Path.insert(pair<string, string>(*it, ""));
-		FinalRecord.insert(pair<string, int>(*it, 0));
-		TempFinalRecord.insert(pair<string, int>(*it, 0));
-	}
-	MinMoney = 32767;
-	string start, end, via[50];
-	string temp;
-	string path[50];
-	int city_via = 0, totaltime = 0, num = 1, money = 0, time = 0, starttime = 0, limittedtime = 30;//day 
-	int count;
-	cout << "where to start ?" << endl;
-	cin >> start;
-	cout << "where to go ?" << endl;
-	cin >> end;
-	cout << "when to go ?" << endl;
-	cin >> starttime;
-	cout << "how many country do you want to pass through?" << endl;
-	cin >> city_via;
-	if (city_via)
-	{
-		cout << "where to pass through?" << endl;
-		for (int i = 1; i <= city_via; i++)
-		{
-			cin >> via[i];
-			cout << " ";
-		}
-	}
-
-
-	time = starttime;
-	via[0] = start;
-	via[city_via + 1] = end;
-	FinalRecord.find(start)->second = 1;
-	TempFinalRecord = FinalRecord;
-	count = 2;
-	cout << "the route is : ";
-	LimittedTimeLeastMoney(totaltime, time, starttime, limittedtime, money, start, end, count, MinMoney, via);
-	
-	for (count = 0, it = City.begin(); it != City.end(); it++)
-	{
-		if (FinalRecord.find(*it)->second)count++;
-	}
-	if (count == 1)
-	{
-		system("CLS");
-		cout << "The route doesn't exist." << endl;
-		return;
-	}
-	//
-	MinMoney = 0;
-	for (int i = 1; i < count; i++)
-	{
-		for (it = City.begin(); it != City.end(); it++)
-		{
-			if (FinalRecord.find(*it)->second == i)
-			{
-				cout << "from :" << Data[Index0[Path[*it]]].from << endl << "Take :" << Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].kind << endl;
-				cout << "number is :" << Path[*it] << endl << "Arrive At " << Data[Index0[Path[*it]]].dest << "  at" << Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival << endl;
-				if (Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].start < time)
-					totaltime += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival - time + 24;
-				else
-					totaltime += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival - time;
-				time = (starttime + totaltime) % 24;
-				MinMoney += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].cost;
-			}
-		}
-	}
-
-	int j = 1;
-	if (totaltime <= limittedtime)
-	{
-		for (it=City.begin(); j <= count; j++)
-		{
-			while (FinalRecord.find(*it)->second != j&&it != City.end())
-				it++;
-			if (j == count)
-				cout << *it;
-			else
-				cout << *it << "->";
-			it = City.begin();
-		}
-		cout << endl << "total time is : " << totaltime << endl;
-		cout << endl;
-		cout << "total money is:" << MinMoney<<endl;
-	}
-	else 
-	{
-		system("CLS");
-		cout << "The route doesn't exist." << endl;
-		return;
-	}}

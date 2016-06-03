@@ -179,17 +179,24 @@ void combine()
 
 void print()
 {
+	int cnnt=0;
 	//cout<<"Total "<<routecount<<endl;
 	printf("Route Name\tStart City\tEnd City\tStart Time\tArrive Time\tCost\t\tKind\n" );
 	for(int i=1;i<=routecount;i++)
 	{
+		cout<<"-----------------------------"<<endl;
+		cout<<"Route count :"<<i<<endl;
 		for(int j=0;j<=Data[i].rNumber;j++)
 		{
+			cout<<"-----------"<<endl;
+			cout<<"rNumber : "<<j<<endl;
+			cnnt++;
 			printf("%s\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%s\n",Data[i].TB[j].name.c_str(),
 				Data[i].from.c_str(),Data[i].dest.c_str(),Data[i].TB[j].start,Data[i].TB[j].arrival,
 				Data[i].TB[j].cost,Data[i].TB[j].kind.c_str());
 		}
 	}
+	cout<<"Total num : "<<cnnt<<endl;
 }
 
 

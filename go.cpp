@@ -8,6 +8,7 @@
 #include <fstream>
 #include <deque>
 #include <stack>
+#include <time.h>
 #include "Datastruct.h"
 
 using namespace std;
@@ -136,5 +137,6 @@ void go()
 			day++;
 			hour=0;
 		}
+		Sleep(10);
 	}
 }

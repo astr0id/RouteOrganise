@@ -40,7 +40,29 @@ void printstack(stack<TBlock> printee)
 		temp.pop();
 	}
 }
+extern set<string> inRoute;
+bool stackcheck()
+{
+	stack<string> temp;
+	bool flag=true;
+	while(!CityStack.empty())
+	{
+		temp.push(CityStack.top());
+		CityStack.pop();
+	}
+	while(!temp.empty())
+	{
+		if(inRoute.find(temp.top())!=inRoute.end())
+			continue;
+		else
+			flag=false;
 
+		CityStack.push(temp.top());
+		temp.pop();
+	}
+	
+	return flag;
+}
 
 void findpath(string start,string destiny,int moneylimit,int timelimit,int curcost,int curtime,int starttime)
 {
@@ -54,6 +76,7 @@ void findpath(string start,string destiny,int moneylimit,int timelimit,int curco
 
 	if(start==destiny)
 	{
+		//if(!stackcheck())return;
 		if(curcost > moneylimit || curtime > timelimit)return;
 		if(curcost < mincost)
 		{

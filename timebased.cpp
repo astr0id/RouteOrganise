@@ -75,18 +75,19 @@ void TimeBased(string city_start, string city_end, int starttime, int &totalmone
 					{
 						int est;
 						est=Data[i].TB[j].arrival-ST[Data[i].from];
-						if(Data[i].TB[j].start < ST[Data[i].from])est+=24;
-
-						if(est<OT[Data[i].dest])//the shortest available route
+						if(Data[i].TB[j].start>Data[i].TB[j].arrival || Data[i].TB[j].start < ST[Data[i].from])est+=24;
+						prev[Data[i].dest]=Data[i].from;
+						//if(est<OT[Data[i].dest])//the shortest available route
+						if(est+V[prev[Data[i].dest]] < V[Data[i].dest])
 						{
 							RM[Data[i].dest] = Data[i].TB[j].cost;
-							OT[Data[i].dest]=est;
-							ST[Data[i].dest]=Data[i].TB[j].arrival;
-							prev[Data[i].dest]=Data[i].from;
-							Path[Data[i].dest] = Data[i].TB[j].name;
-							Index0[Data[i].TB[j].name] = i;
-							Index1[Data[i].TB[j].name] = j;
-							V[Data[i].dest]=OT[Data[i].dest]+V[prev[Data[i].dest]];//distance + prev point's distance
+							//OT[Data[i].dest] =  est;
+							ST[Data[i].dest] =Data[i].TB[j].arrival;
+							prev[Data[i].dest] =Data[i].from;
+							Path[Data[i].dest]=Data[i].TB[j].name;
+							Index0[Data[i].TB[j].name]=i;
+							Index1[Data[i].TB[j].name]=j;
+							V[Data[i].dest]=est+V[prev[Data[i].dest]];//distance + prev point's distance
 							//finish updating a route
 							//travel time = ST[dest]-ST[from];
 							//Total time => while tracing back from the dest and cumulate each part's travel time
@@ -170,5 +171,6 @@ void TimeBased(string city_start, string city_end, int starttime, int &totalmone
 		temp = prev[temp];
 	}
 	//cout<<city_start<<endl<<"total time is : "<<V[city_end]<<endl;
+	cout<<"FINAL TIME "<<V[city_end]<<endl;
 	totalmoney += RM[city_end];
 }
