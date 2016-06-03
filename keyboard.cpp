@@ -13,6 +13,7 @@
 #include "moneybased.h"
 #include "timebased.h"
 #include "Datastruct.h"
+#include "findpath.h"
 #include "LTLM.h"
 
 using namespace std;
@@ -28,6 +29,23 @@ map<string, int>Index0;
 map<string, int>Index1;
 
 int step=2;
+
+void FPkb()
+{
+	string start, end;
+	int starttime,tlimit,mlimit;
+	cout << "where to start ?" << endl;
+	cin >> start;
+	cout << "where to go ?" << endl;
+	cin >> end;
+	cout << "when to go ?" << endl;
+	cin >> starttime;
+	cout << "what time you have" << endl;
+	cin >> tlimit;
+	cout<< "how much money you have"<<endl;
+	cin >> mlimit;
+	findpath(start,end,mlimit,tlimit,0,0,starttime);
+}
 
 void keyboard()
 {
@@ -46,7 +64,8 @@ void keyboard()
 			TMBkeyboard(1);
 			break;
 		case 3:
-			LTkeyboard();
+			//LTkeyboard();
+			FPkb();
 			break;
 	}
 }

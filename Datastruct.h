@@ -26,10 +26,19 @@ typedef struct
 	string currentCity;
 	string nextCity;
 	int timeleft;
-	//int currentState;
-	//1-waiting 2-traveling
 	bool isTravel;
 }PassengerData;
+
+typedef struct 
+{
+	string start;
+	string dest;
+	int from;
+	int arrival;
+	int cost;
+	string id;
+	string kind;
+}TBlock;
 
 const string citylist[]= {"A","B","C","D","E","F","G","H","I","J"};
 

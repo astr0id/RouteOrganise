@@ -26,39 +26,45 @@ void LimittedTimeLeastMoney(int TotalTime, int Cur_time, int starttime, int Limi
 	map<string, int>::iterator mapit;
 	set<string>::iterator it, tempit;
 	it = City.begin();
-	if (TotalTime > LimittedTime);
-	else if (City_start == City_end)//到达终点
+	if (TotalTime > LimittedTime)
 	{
-		if (((Money == MinMoney) && (TotalTime < temptime)) || Money < MinMoney)
-		{
-			k = 0;
-			for (; via[k] != ""; k++)
-			{
-				if (TempFinalRecord.find(via[k])->second)num++;
-			}
-			if (num == k)
-			{
-				Path = tempPath;
-				FinalRecord = TempFinalRecord;
-				MinMoney = Money;
-				temptime = TotalTime;
-			}
-		}		
+		return;
 	}
-	else
+	else //到达终点
 	{
-		while (it != City.end())
+		if (City_start == City_end)
 		{
-			mapit = TempFinalRecord.find(*it);
-			if (!mapit->second)
+			if (((Money == MinMoney) && (TotalTime < temptime)) || Money < MinMoney)
 			{
-				TempFinalRecord.find(*it)->second = count++;
-				for (int i = 1; i <= routecount; i++)
+				k = 0;
+				for (; via[k] != ""; k++)
 				{
-					if (Data[i].from == City_start&&Data[i].dest == *it)
+					if (TempFinalRecord.find(via[k])->second)num++;
+				}
+				if (num == k)
+				{
+					Path = tempPath;
+					FinalRecord = TempFinalRecord;
+					MinMoney = Money;
+					temptime = TotalTime;
+				}
+			}
+		}
+		else
+		{
+			while (it != City.end())
+			{
+				mapit = TempFinalRecord.find(*it);
+				if (!mapit->second)
+				{
+					TempFinalRecord.find(*it)->second = count;
+					count++;
+					for (int i = 1; i <= routecount; i++)
 					{
-						for (int j = 0; j < Data[i].rNumber; j++)
+						if (Data[i].from == City_start&&Data[i].dest == *it)
 						{
+							for (int j = 0; j < Data[i].rNumber; j++)
+							{
 								moneytemp = Money;
 								totaltimetemp = TotalTime;
 								Money += Data[i].TB[j].cost;
@@ -75,17 +81,17 @@ void LimittedTimeLeastMoney(int TotalTime, int Cur_time, int starttime, int Limi
 								Money = moneytemp;
 								TotalTime = totaltimetemp;
 								Cur_time = (starttime + TotalTime) % 24;
-							
-						}
-						
-					}	
-					
-				}
-				count = tempcount;
-				TempFinalRecord.find(*it)->second = 0;
-			}
-			it++;
-		}
 
+							}
+
+						}	
+
+					}
+					count = tempcount;
+					TempFinalRecord.find(*it)->second = 0;
+				}
+				it++;
+			}
+		}
 	}
 }

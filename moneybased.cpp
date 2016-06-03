@@ -72,21 +72,7 @@ void MoneyBased(string city_start, string city_end, int starttime,int &totalmone
 								OT[Data[i].dest] = totaltime;
 							}
 						}
-						/*if (Data[i].TB[j].cost<RM[Data[i].dest] )//&& Data[i].TB[j].start >= ST[Data[i].from]
-						{
-							
-							ST[Data[i].dest] = Data[i].TB[j].arrival;
-							prev[Data[i].dest] = Data[i].from;
-							Path[Data[i].dest] = Data[i].TB[j].name;
-							Index0[Data[i].TB[j].name] = i;
-							Index1[Data[i].TB[j].name] = j;
-							RM[Data[i].dest] = Data[i].TB[j].cost;
-							if (RM[Data[i].dest] + V[prev[Data[i].dest]]<V[Data[i].dest])
-								V[Data[i].dest] = RM[Data[i].dest] + V[prev[Data[i].dest]];
-							//cout << "UPDATE Route from " << Data[i].from << " to " << Data[i].dest << endl;
-							//cout << "Start at " << Data[i].TB[j].start << " Arive at " << Data[i].TB[j].arrival << endl;
-							//cout << "Moneycost is " << V[Data[i].dest] << endl;
-						}*/
+						
 					}
 				}
 			}
@@ -117,19 +103,7 @@ void MoneyBased(string city_start, string city_end, int starttime,int &totalmone
 			S.insert(*it);
 			City.erase(*it);
 		}
-		//cout << "City include " << endl;
-		//for (it = City.begin(); it != City.end(); it++) //initialize
-		//{
-		//	cout << *it << " ";//set every node to start node 's distance is INFINITY
-		//}
-		//cout << endl;
 	}
-	//system("CLS");
-	//mapit = V.begin();
-	//for (; mapit != V.end(); mapit++)
-	//{
-	//	cout << mapit->first << " is " << mapit->second << endl;
-	//}
 	string temp;
 	temp = city_end;
 	//cout<<"the route is : ";
