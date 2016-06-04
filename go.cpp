@@ -137,6 +137,6 @@ void go()
 			day++;
 			hour=0;
 		}
-		Sleep(10);
+		//Sleep(10);
 	}
 }

@@ -53,7 +53,7 @@ bool stackcheck()
 	while(!temp.empty())
 	{
 		if(inRoute.find(temp.top())!=inRoute.end())
-			continue;
+			flag=true;
 		else
 			flag=false;
 
@@ -76,7 +76,7 @@ void findpath(string start,string destiny,int moneylimit,int timelimit,int curco
 
 	if(start==destiny)
 	{
-		//if(!stackcheck())return;
+		if(!stackcheck())return;
 		if(curcost > moneylimit || curtime > timelimit)return;
 		if(curcost < mincost)
 		{

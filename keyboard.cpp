@@ -144,13 +144,11 @@ void TMBkeyboard(int choice)
 					cout<<"start @ "<<Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].start<<endl;
 					cout << "from :" << Data[Index0[Path[*it]]].from << endl << "Take :" << Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].kind << endl;
 					cout << "number is :" << Path[*it] << endl << "Arrive At " << Data[Index0[Path[*it]]].dest << "  at" << Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival << endl;
-					if (i == count)
-					{
-						if (Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].start < time)totaltime += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival - time + 24;
-						else totaltime += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival - time;
-					}
+					if (Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].start < time)totaltime += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival - time + 24;
+					else totaltime += Data[Index0[Path[*it]]].TB[Index1[Path[*it]]].arrival - time;
 				}
 			}
+			time = (starttime + totaltime) % 24;
 		}
 		step+=count;
 		step++;

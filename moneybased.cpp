@@ -55,9 +55,11 @@ void MoneyBased(string city_start, string city_end, int starttime,int &totalmone
 				{
 					if (!S.count(Data[i].dest))
 					{
-						if (Data[i].TB[j].start < ST[Data[i].from])totaltime = Data[i].TB[j].arrival - ST[Data[i].from] + 24;
-						else totaltime = Data[i].TB[j].arrival - ST[Data[i].from];
-						if (Data[i].TB[j].cost<RM[Data[i].dest] || (Data[i].TB[j].cost == RM[Data[i].dest])&&(totaltime < OT[Data[i].dest]))
+						int est;
+						est = Data[i].TB[j].arrival - ST[Data[i].from];
+						if (Data[i].TB[j].start>Data[i].TB[j].arrival || Data[i].TB[j].start < ST[Data[i].from])est += 24;
+						prev[Data[i].dest] = Data[i].from;
+						if (Data[i].TB[j].cost + V[prev[Data[i].dest]]<V[Data[i].dest] || (Data[i].TB[j].cost + V[prev[Data[i].dest]] == V[Data[i].dest]) && (est+OT[prev[Data[i].dest]] < OT[Data[i].dest]))
 						{
 							
 							ST[Data[i].dest] = Data[i].TB[j].arrival;
@@ -65,12 +67,8 @@ void MoneyBased(string city_start, string city_end, int starttime,int &totalmone
 							Path[Data[i].dest] = Data[i].TB[j].name;
 							Index0[Data[i].TB[j].name] = i;
 							Index1[Data[i].TB[j].name] = j;
-							RM[Data[i].dest] = Data[i].TB[j].cost;
-							if (RM[Data[i].dest] + V[prev[Data[i].dest]] < V[Data[i].dest] || (RM[Data[i].dest] + V[prev[Data[i].dest]] == V[Data[i].dest]) && (totaltime < OT[Data[i].dest]))
-							{
-								V[Data[i].dest] = RM[Data[i].dest] + V[prev[Data[i].dest]];
-								OT[Data[i].dest] = totaltime;
-							}
+							V[Data[i].dest] = Data[i].TB[j].cost + V[prev[Data[i].dest]];
+							OT[Data[i].dest] = est + OT[prev[Data[i].dest]];
 						}
 						
 					}

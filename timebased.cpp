@@ -80,7 +80,7 @@ void TimeBased(string city_start, string city_end, int starttime, int &totalmone
 						//if(est<OT[Data[i].dest])//the shortest available route
 						if(est+V[prev[Data[i].dest]] < V[Data[i].dest])
 						{
-							RM[Data[i].dest] = Data[i].TB[j].cost;
+							RM[Data[i].dest] = Data[i].TB[j].cost+RM[prev[Data[i].dest]];
 							//OT[Data[i].dest] =  est;
 							ST[Data[i].dest] =Data[i].TB[j].arrival;
 							prev[Data[i].dest] =Data[i].from;
