@@ -21,15 +21,9 @@ PassengerData PData;
 
 extern DATA Data[1000];
 extern int routecount;
-extern map<string, int> FinalRecord;
-extern map<string, string> Path;
-extern map<string, int> Index0;
-extern map<string, int> Index1;
 extern set<string> pastcity;
-extern int mincost;
 extern std::stack<TBlock> TData;
 
-map<int,string> NewRecord;
 int RecNum;
 
 int main()
@@ -37,11 +31,14 @@ int main()
 	int day = 0,hour = 0,time = 0,seq=2;
 	bool flag=true,setoff=true;
 	newload();
-	
-	keyboard();
-	//printstack(TData);
+	class Passenger DGM;
+	DGM.initialiaze();
+	TData=DGM.getRoute();
+	//keyboard();
+	printstack(TData);
 	//cout<<"min cost "<<mincost<<endl;
 	//go();
 	//print();
+	system("pause");
 	return 0;
 }

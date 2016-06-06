@@ -1,6 +1,7 @@
+#include <stack>
 #ifndef LOAD_H
 #define LOAD_H
-//#include "Datastruct.h"
+#include "Datastruct.h"
 
 void load();
 void newload();
@@ -8,5 +9,5 @@ void oldload();
 void print();
 void generate();
 void combine();
-
+void printstack(stack<TBlock>);
 #endif
