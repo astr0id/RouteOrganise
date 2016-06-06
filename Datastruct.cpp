@@ -312,3 +312,86 @@ void Passenger::MoneyBased(string city_start, string city_end)
 	}
 
 }
+
+
+extern DATA Data[1000];
+extern int routecount;
+
+
+bool Paseenger::stackcheck()
+{
+    stack<string> temp;
+    bool flag=true;
+    while(!CityStack.empty())
+    {
+        temp.push(CityStack.top());
+        CityStack.pop();
+    }
+    while(!temp.empty())
+    {
+        if(inRoute.find(temp.top())!=inRoute.end())
+            flag=true;
+        else
+            flag=false;
+
+        CityStack.push(temp.top());
+        temp.pop();
+    }
+
+    return flag;
+}
+
+void Passenger::findpath(string start,string destiny,int moneylimit,int timelimit,int curcost,int curtime,int starttime)
+{
+    //cout<<"start"<<start<<"     timelimit"<<timelimit<<endl;
+    TBlock temp;
+    //set<string>::iterator sit;
+    //if it's out of bound,then don't travel any further
+    if(curcost >= moneylimit && start != destiny)
+        return ;
+    if(curtime >= timelimit && start != destiny)
+        return ;
+
+    if(start==destiny)
+    {
+        //if(!stackcheck())return;
+        if(curcost > moneylimit || curtime > timelimit)return;
+        if(curcost < mincost)
+        {
+            mincost=curcost;
+            //printstack(TStack);
+            TData=TStack;
+        }
+        RDnum++;
+        return ;
+    }
+    //deep-priority traverse
+    pastcity.erase(start);
+    for(int i=1; i<=routecount; i++)
+    {
+        if(Data[i].from == start && ( pastcity.find(Data[i].dest)!=pastcity.end() ) )//Don't go back
+        {
+            CityStack.push(Data[i].from);
+            temp.start=Data[i].from;
+            temp.dest=Data[i].dest;
+            for(int j=0; j<=Data[i].rNumber; j++)
+            {
+                temp.from=Data[i].TB[j].start;
+                temp.arrival=Data[i].TB[j].arrival;
+                temp.id=Data[i].TB[j].name;
+                temp.kind=Data[i].TB[j].kind;
+                temp.cost=Data[i].TB[j].cost;
+                int est;
+                est=Data[i].TB[j].arrival-starttime;
+                if(Data[i].TB[j].start < starttime || Data[i].TB[j].start > Data[i].TB[j].arrival)est+=24;
+
+                TStack.push(temp);
+                findpath(Data[i].dest,destiny,moneylimit,timelimit,curcost+Data[i].TB[j].cost,curtime+est,Data[i].TB[j].arrival);
+                TStack.pop();
+            }
+            CityStack.pop();
+        }
+    }
+    pastcity.insert(start);
+    return ;
+}
